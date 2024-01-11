@@ -36,7 +36,7 @@ export default function showSchools() {
         return(
               <div class="col-sm-3 pt-3">
                 <div class="card px-3 pt-3">
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7jkThuSxGVqb60uk7qT9VaafeJg7Vu616gmgEAgt61A&s" class="card-img-top" alt="..." />
+                  <img src={i.image} class="card-img-top" alt="..." />
                   <div class="card-body">
                     <h5 class="card-title">{i.name}</h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary">{i.city}</h6>

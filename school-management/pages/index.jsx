@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import {useForm} from 'react-hook-form'
 import { EMAIL_REGEX_VALIDATION, PHONE_REGEX_VALIDATION } from '../lib/lib'
 import { indianStates } from '../lib/lib'
+
 export default function Home() {
 
   const {
@@ -12,28 +13,34 @@ export default function Home() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const file = data.image[0].name;
+    const formData = new FormData();
+    formData.append('schoolName', data.schoolName)
+    formData.append('email', data.email)
+    formData.append('image', data.image[0])
+    formData.append('address', data.address)
+    formData.append('city', data.city)
+    formData.append('state', data.state)
+    formData.append('phone', data.phone)
+
     try {
       const response = await fetch('/api/submitForm', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
-      const responseData = await response.json();
       if (response.ok) {
-        alert('Data successfully inserted!');
+        console.log('Data uploaded successfully!');
+        alert("Form Submitted successfully!")
+        reset();
       } else {
-        alert('Failed to insert data');
+        console.error('Failed to upload Data.');
+        alert("Failed to Submit Form!")
       }
-       
-      reset();
-      console.log(responseData); // Handle success or error response from the server
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error uploading data:', error);
+      alert("Error uploading Data")
     }
+
   };
 
   return (
