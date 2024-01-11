@@ -18,14 +18,11 @@ export default async function handler(req, res) {
       const result = await dbconnection.query(query, values);
 
       res.status(200).json({ message: 'Data inserted successfully', result });
-      console.log(message)
     } catch (error) {
       res.status(500).json({ message: 'Error inserting data', error: error.message });
-      console.log(message)
       
     }
   } else {
     res.status(405).json({ message: 'Method Not Allowed' });
-    console.log(message)
   }
 }

@@ -7,7 +7,7 @@ export default function Home() {
 
   const {
     register,
-    handleSubmit,
+    handleSubmit, reset,
     formState: { errors },
   } = useForm();
 
@@ -23,11 +23,17 @@ export default function Home() {
       });
 
       const responseData = await response.json();
+      if (response.ok) {
+        alert('Data successfully inserted!');
+      } else {
+        alert('Failed to insert data');
+      }
+       
+      reset();
       console.log(responseData); // Handle success or error response from the server
     } catch (error) {
       console.error('Error:', error);
     }
-    console.log(file);
   };
 
   return (
@@ -42,7 +48,7 @@ export default function Home() {
       <div className="container pt-5">
         <form className="row g-3" onSubmit={handleSubmit(onSubmit)}>
           <div className="col-md-12">
-            <label for="SchoolName" className="form-label">School Name</label>
+            <label htmlFor="SchoolName" className="form-label">School Name</label>
             <input type="text" className="form-control" {...register("schoolName", {required: true, minLength:3})} />
             {errors.schoolName && (
               <span className='errormsg'>
@@ -51,7 +57,7 @@ export default function Home() {
             )}
           </div>
           <div className="col-md-6">
-            <label for="Email" className="form-label">Email</label>
+            <label htmlFor="Email" className="form-label">Email</label>
             <input type="email" className="form-control" {...register("email", {required: true, pattern: EMAIL_REGEX_VALIDATION,})} />
             {errors.email && (
               <span className='errormsg'>
@@ -60,7 +66,7 @@ export default function Home() {
             )}
           </div>
           <div className="col-md-6">
-            <label for="Image" className="form-label">School Photo</label>
+            <label htmlFor="Image" className="form-label">School Photo</label>
             <input className="form-control" type="file" {...register("image", {required: true, 
               validate: {
                 validFileType: (value) =>
@@ -75,7 +81,7 @@ export default function Home() {
             )}
           </div>
           <div className="col-12">
-            <label for="Address" className="form-label">Address</label>
+            <label htmlFor="Address" className="form-label">Address</label>
             <input type="text" className="form-control" {...register("address", {required: true, minLength:5,})} />
             {errors.address && (
               <span className='errormsg'>
@@ -84,7 +90,7 @@ export default function Home() {
             )}
           </div>
           <div className="col-md-6">
-            <label for="City" className="form-label" >City</label>
+            <label htmlFor="City" className="form-label" >City</label>
             <input type="text" className="form-control" {...register("city", {required: true, minLength:3,})} />
             {errors.email && (
               <span className='errormsg'>
@@ -93,9 +99,9 @@ export default function Home() {
             )}
           </div>
           <div className="col-md-4">
-            <label for="State" className="form-label">State</label>
+            <label htmlFor="State" className="form-label">State</label>
             <select className="form-select" {...register("city", {required: true})}>
-              <option selected>Choose...</option>
+              <option value="DEFAULT" disabled>Choose...</option>
               {indianStates.map((state, index) => (
                 <option key={index} value={state}>
                   {state}
@@ -104,7 +110,7 @@ export default function Home() {
             </select>
           </div>
           <div className="col-md-2">
-            <label for="mobile" className="form-label">Mobile</label>
+            <label htmlFor="mobile" className="form-label">Mobile</label>
             <input type="tel" className="form-control" {...register("phone", {required: true, pattern: PHONE_REGEX_VALIDATION,})} />
             {errors.email && (
               <span className='errormsg'>
